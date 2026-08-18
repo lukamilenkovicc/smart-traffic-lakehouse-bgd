@@ -212,6 +212,32 @@ tempCodeRunnerFile.py
 # Marimo
 marimo/_static/
 marimo/_lsp/
+
+
+# Python okruženja
+venv/
+.venv/
+env/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# Sirovi i privremeni podaci (NE IDU NA GIT)
+data/raw/*.json
+data/raw/*.csv
+*.log
+
+# Databricks & Jupyter privremeni fajlovi
+.ipynb_checkpoints/
+.databricks/
+
+# VS Code & IDE podešavanja
+.vscode/
+.idea/
+
+
+
 __marimo__/
 
 # Streamlit
