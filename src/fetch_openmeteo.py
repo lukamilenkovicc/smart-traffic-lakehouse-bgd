@@ -46,4 +46,3 @@ def fetch_openmeteo():
     except requests.exceptions.RequestException as e:
         print(f"Greska prilikom pozivanja API-ja: {e}")
 
-fetch_openmeteo()     

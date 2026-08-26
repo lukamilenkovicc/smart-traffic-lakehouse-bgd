@@ -33,4 +33,3 @@ def fetch_gtfs():
         print("Preuzeti fajl nije validan zip fajl")
 
 
-fetch_gtfs()

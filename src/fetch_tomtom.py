@@ -95,7 +95,7 @@ def fetch_tomtom():
         else:
             print(e)
 
-fetch_tomtom()
+
 
 
 

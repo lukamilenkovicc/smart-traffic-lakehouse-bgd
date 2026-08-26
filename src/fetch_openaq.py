@@ -52,4 +52,3 @@ def fetch_openaq():
             print(f"Poruka: {e.response.text}")
 
 
-fetch_openaq()
