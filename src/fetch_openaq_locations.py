@@ -7,14 +7,14 @@ from dotenv import load_dotenv
 load_dotenv()
 OPENAQ_API_KEY = os.getenv("OPENAQ_API_KEY")
 
-OUTPUT_DIR = "/Volumes/bg_traffic/bg_traffic_bronze/landing/openaq"
+OUTPUT_DIR = "/Volumes/bg_traffic/bg_traffic_bronze/landing/openaq_locations"
 
 LATITUDE = 44.8125
 LONGITUDE = 20.4612
-RADIUS_METERS = 25000 
+RADIUS_METERS = 5000 
 
 
-def fetch_openaq():
+def fetch_openaq_locations():
     if not OPENAQ_API_KEY:
         print("OPENAQ API KEY nije pronadjen u .env fajlu!")
         return
@@ -40,10 +40,10 @@ def fetch_openaq():
             "data": response.json()
         }
 
-        filepath = f"{OUTPUT_DIR}/openaq_{timestamp_str}.json"
+        filepath = f"{OUTPUT_DIR}/openaq_locations_{timestamp_str}.json"
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2, ensure_ascii=False)
-        print(f"Uspesno sacuvani OpenAQ podaci u: {filepath}")
+        print(f"Uspesno sacuvani OpenAQ(locations) podaci u: {filepath}")
 
     except requests.exceptions.RequestException as e:
         print(f"Greska prilikom pozivanja OpenAQ API-ja: {e}")
