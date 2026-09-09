@@ -24,3 +24,10 @@ FROM (
         INTERVAL 1 DAY
     )) AS date_value
 );
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_date
+ALTER COLUMN date_sid SET NOT NULL;
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_date
+ADD CONSTRAINT pk_dim_date PRIMARY KEY (date_sid);
+

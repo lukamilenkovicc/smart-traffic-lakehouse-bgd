@@ -21,3 +21,10 @@ FROM bg_traffic.bg_traffic_silver.gtfs_route r LEFT JOIN (
     JOIN bg_traffic.bg_traffic_silver.gtfs_shape s ON t.shape_id = s.shape_id
     GROUP BY t.route_id 
 ) d ON r.route_id = d.route_id;
+
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_gtfs_route
+ALTER COLUMN route_sid SET NOT NULL;
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_gtfs_route
+ADD CONSTRAINT pk_dim_gtfs_route PRIMARY KEY (route_sid);

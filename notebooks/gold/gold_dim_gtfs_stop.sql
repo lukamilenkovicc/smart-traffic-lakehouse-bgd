@@ -7,3 +7,10 @@ SELECT
     stop_latitude,
     stop_longitude
 FROM  bg_traffic.bg_traffic_silver.gtfs_stop;
+
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_gtfs_stop
+ALTER COLUMN stop_sid SET NOT NULL;
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_gtfs_stop
+ADD CONSTRAINT pk_dim_gtfs_stop PRIMARY KEY (stop_sid);

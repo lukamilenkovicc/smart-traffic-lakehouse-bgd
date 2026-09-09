@@ -19,3 +19,10 @@ SELECT
 FROM (
     SELECT DISTINCT icon_category FROM bg_traffic.bg_traffic_silver.tomtom_incident
 );
+
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_incident
+ALTER COLUMN category_code SET NOT NULL;
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_incident
+ADD CONSTRAINT pk_dim_incident PRIMARY KEY (category_code);

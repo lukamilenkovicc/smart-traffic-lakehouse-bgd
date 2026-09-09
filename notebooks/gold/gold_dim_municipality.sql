@@ -42,3 +42,15 @@ FROM (
 
 )
 ORDER BY municipality_sid;
+
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_municipality
+ALTER COLUMN municipality_sid SET NOT NULL;
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_municipality
+ADD CONSTRAINT pk_dim_municipality PRIMARY KEY (municipality_sid);
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_municipality
+ADD CONSTRAINT uq_municipality_name UNIQUE (municipality_name);
+
+

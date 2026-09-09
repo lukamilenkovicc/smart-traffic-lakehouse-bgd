@@ -20,5 +20,10 @@ FROM (
     GROUP BY road_name
 );
 
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_road_segment
+ALTER COLUMN road_segment_sid SET NOT NULL;
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_road_segment
+ADD CONSTRAINT pk_dim_road_segment PRIMARY KEY (road_segment_sid);
     
     

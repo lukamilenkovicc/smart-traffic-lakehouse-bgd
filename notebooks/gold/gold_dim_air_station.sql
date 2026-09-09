@@ -9,3 +9,10 @@ SELECT DISTINCT
 
 FROM bg_traffic.bg_traffic_silver.openaq_locations;
 
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_air_station
+ALTER COLUMN location_sid SET NOT NULL;
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_air_station
+ADD CONSTRAINT pk_dim_air_station PRIMARY KEY (location_sid);
+

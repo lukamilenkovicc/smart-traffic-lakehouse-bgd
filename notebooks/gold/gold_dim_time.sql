@@ -26,3 +26,9 @@ FROM (
 );
 
 
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_time
+ALTER COLUMN time_sid SET NOT NULL;
+
+ALTER TABLE bg_traffic.bg_traffic_gold.dim_time
+ADD CONSTRAINT pk_dim_time PRIMARY KEY (time_sid);
+
