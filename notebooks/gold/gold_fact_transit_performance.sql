@@ -38,9 +38,12 @@ USING (
         s_to.stop_sid AS to_stop_sid,
         m.municipality_sid,
         st.trip_id,
-        CAST(
-            UNIX_TIMESTAMP(st.arrival_time, 'HH:mm:ss') - UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss') AS INT
-        ) AS planned_travel_time_sec,
+        CASE WHEN UNIX_TIMESTAMP(st.arrival_time, 'HH:mm:ss') >= UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss')
+        THEN
+        UNIX_TIMESTAMP(st.arrival_time, 'HH:mm:ss') - UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss')
+        ELSE
+        UNIX_TIMESTAMP(st.arrival_time, 'HH:mm:ss') - UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss') + 86400
+        END AS planned_travel_time_sec,
         COALESCE(tf.avg_congestion, 1.0) AS congestion_ratio,
         ROUND(
             (UNIX_TIMESTAMP(st.arrival_time,'HH:mm:ss') - UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss'))
