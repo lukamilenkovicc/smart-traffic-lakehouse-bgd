@@ -45,9 +45,13 @@ USING (
         UNIX_TIMESTAMP(st.arrival_time, 'HH:mm:ss') - UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss') + 86400
         END AS planned_travel_time_sec,
         COALESCE(tf.avg_congestion, 1.0) AS congestion_ratio,
-        ROUND(
-            (UNIX_TIMESTAMP(st.arrival_time,'HH:mm:ss') - UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss'))
-            * (GREATEST( COALESCE(tf.avg_congestion, 1.0),1.0) - 1.0), 1) AS estimated_extra_time_sec,
+       ROUND(
+            (CASE 
+                WHEN UNIX_TIMESTAMP(st.arrival_time, 'HH:mm:ss') >= UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss')
+                THEN UNIX_TIMESTAMP(st.arrival_time, 'HH:mm:ss') - UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss')
+                ELSE (UNIX_TIMESTAMP(st.arrival_time, 'HH:mm:ss') - UNIX_TIMESTAMP(st.previous_departure_time, 'HH:mm:ss')) + 86400
+            END) * (GREATEST(COALESCE(tf.avg_congestion, 1.0), 1.0) - 1.0), 
+        1) AS estimated_extra_time_sec,
         tf.traffic_measured_at AS measurement_timestamp
     FROM (
         SELECT
@@ -75,8 +79,8 @@ USING (
             MAX(measurement_timestamp) AS traffic_measured_at
         FROM bg_traffic.bg_traffic_gold.fact_traffic_flow
         GROUP BY date_sid, CAST(FLOOR(time_sid / 100) AS INT), municipality_sid
-    ) tf ON tf.flow_hour = CAST(FLOOR(CAST(DATE_FORMAT(TO_TIMESTAMP(st.arrival_time,'HH:mm:ss'),'HHmm') AS INT) / 100) AS INT)
-        AND tf.municipality_sid = m.municipality_sid
+    ) tf  ON tf.flow_hour = CAST(FLOOR(CAST(DATE_FORMAT(TO_TIMESTAMP(st.arrival_time,'HH:mm:ss'),'HHmm') AS INT) / 100) AS INT)
+        AND tf.municipality_sid = m.municipality_sid  
     WHERE
         st.from_stop_id IS NOT NULL
         AND st.previous_departure_time IS NOT NULL
